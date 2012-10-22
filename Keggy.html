@@ -1,0 +1,63 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml" >
+<!-- saved from url=(0014)about:internet -->
+<head>
+    <title>Silverlight Project Test Page </title>
+    
+    <link rel="stylesheet" type="text/css" href="css/ext-all.css" />    
+    <script type="text/javascript" src="ext-base.js"></script>
+    <script type="text/javascript" src="ext-all-debug.js"></script>
+    <script type="text/javascript" src="Silverlight.js"></script>
+    <script type="text/javascript" src="Keggy.html.js"></script>
+    <style type="text/css">
+        .silverlightHost { width: 0px; height: 0px; }
+    </style>
+</head>
+
+<body>
+    <div id="python"></div>
+    <div id="SilverlightControlHost" class="silverlightHost" >
+        <script type="text/javascript">
+            createSilverlight();
+            
+            Ext.onReady(function()
+            {
+                var simple = new Ext.FormPanel({
+                    labelWidth: 75,
+                    frame:true,
+                    title: 'GUI Script',
+                    bodyStyle:'padding:5px 5px 0',
+                    width: 800,
+                    defaultType: 'textarea',
+                    height: 300,
+                    items: [{
+                            fieldLabel: 'Python',                            
+                            height: 200,
+                            width: 600,
+                            name: 'pythonTxt'                            
+                        }
+                    ],
+
+                    buttons: [{
+                        text: 'Save',
+                        handler: function() {
+                            var script = simple.getForm().getValues();
+                            execute('ScriptEngine', 'Execute', script.pythonTxt); 
+                        }
+                    },{
+                        text: 'Clear',
+                        handler: function() { simple.getForm().reset(); }
+                    }]
+                });
+
+                simple.render(getEl('python'));
+            });
+            
+            function execute(obj, fn, params)
+            {
+                document.getElementById('SilverlightControl').Content[obj][fn](params);
+            }
+        </script>
+    </div>
+    
+</body>
+</html>
